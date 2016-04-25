@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -7,6 +8,9 @@ namespace MyTinyCollege.Models
 {
     public class Student: Person
     {
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Enrollment Date")]
         public DateTime EnrollementDate { get; set; }
 
         public virtual ICollection<Enrollment> Enrollments { get; set; }
