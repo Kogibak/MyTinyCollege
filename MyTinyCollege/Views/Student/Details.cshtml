@@ -1,0 +1,86 @@
+﻿@model MyTinyCollege.Models.Student
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Student</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstMidName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstMidName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EnrollementDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EnrollementDate)
+        </dd>
+        @*DOuellette: Added student enrollment*@
+        <dt>
+            @Html.DisplayNameFor(model=>model.Enrollments)
+        </dt>
+        <dd>
+            <table class="table">
+                <tr>
+                    <th>Course Title</th>
+                    <th>Grade</th>
+                    <th>&nbsp</th>
+                </tr>
+                @foreach (var item in Model.Enrollments)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem=>item.course.Title)</td>
+                        <td>@Html.DisplayFor(modelItem=>item.Grade)</td>
+                        <td>
+                            @if(String.IsNullOrEmpty(item.Grade.ToString()))
+                            {
+                                //no grade detected - Create add grade ling
+                                <a href="@Url.Action("Edit", "Enrollment", new { id = item.EnrollmentID })" title="Add Grade">Add Grade</a>
+                                <span class="glyphicon glyphicon-edit"></span>
+                            }
+                            else
+                            {
+                                //grade detected - create edit grade link
+                                <a href="@Url.Action("Edit", "Enrollment", new { id = item.EnrollmentID })" title="Edit Grade">Edit Grade</a>
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            }
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </dd>
+        @*end of student enrollment*@
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
